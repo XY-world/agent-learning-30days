@@ -306,17 +306,75 @@
         }
 
         .section li {
-            padding: 12px 16px;
             background: var(--bg-secondary);
             border-radius: 8px;
             font-size: 15px;
             color: var(--text-secondary);
+            overflow: hidden;
+        }
+
+        .section li .learn-header {
+            padding: 12px 16px;
             display: flex;
             align-items: flex-start;
             gap: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
         }
 
-        .section li::before { content: '▸'; color: var(--accent); flex-shrink: 0; }
+        .section li .learn-header:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .section li .learn-header::before { content: '▸'; color: var(--accent); flex-shrink: 0; transition: transform 0.2s; }
+        .section li.expanded .learn-header::before { transform: rotate(90deg); }
+
+        .section li .learn-detail {
+            display: none;
+            padding: 0 16px 16px 36px;
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            margin-top: 0;
+            padding-top: 12px;
+        }
+
+        .section li.expanded .learn-detail {
+            display: block;
+        }
+
+        .section li .learn-detail ul {
+            margin-top: 8px;
+            padding-left: 16px;
+        }
+
+        .section li .learn-detail li {
+            background: none;
+            padding: 4px 0;
+            font-size: 13px;
+        }
+
+        .section li .learn-detail li .learn-header {
+            padding: 0;
+            cursor: default;
+        }
+
+        .section li .learn-detail li .learn-header:hover {
+            background: none;
+        }
+
+        .section li .learn-detail code {
+            background: var(--bg-primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .section li .learn-detail a {
+            color: var(--accent-light);
+        }
+
         .section a { color: var(--accent-light); text-decoration: none; }
         .section a:hover { text-decoration: underline; }
 
@@ -569,11 +627,42 @@
                             </div>
                         </div>
                         <div class="section">
-                            <div class="section-title">📚 学习内容</div>
+                            <div class="section-title">📚 学习内容 <span style="font-size: 12px; color: var(--text-muted); font-weight: normal;">（点击展开详情）</span></div>
                             <ul>
-                                <li>阅读 Lilian Weng 经典文章：<a href="https://lilianweng.github.io/posts/2023-06-23-agent/" target="_blank">LLM Powered Autonomous Agents</a></li>
-                                <li>理解四大核心组件：大语言模型、记忆系统、工具调用、规划能力</li>
-                                <li>了解 ReAct、CoT、Self-Reflection 等推理模式</li>
+                                <li class="expandable">
+                                    <div class="learn-header">阅读 Lilian Weng 经典文章：<a href="https://lilianweng.github.io/posts/2023-06-23-agent/" target="_blank">LLM Powered Autonomous Agents</a></div>
+                                    <div class="learn-detail">
+                                        <strong>为什么要读这篇？</strong> 这是 Agent 领域最经典的综述文章，OpenAI 研究员 Lilian Weng 撰写，被引用无数次。<br><br>
+                                        <strong>重点关注：</strong>
+                                        <ul>
+                                            <li><div class="learn-header">Planning 部分：Task Decomposition、Self-Reflection</div></li>
+                                            <li><div class="learn-header">Memory 部分：短期记忆 vs 长期记忆</div></li>
+                                            <li><div class="learn-header">Tool Use 部分：MRKL、Toolformer、HuggingGPT</div></li>
+                                        </ul>
+                                        <strong>预计时间：</strong> 1-2 小时精读 + 做笔记
+                                    </div>
+                                </li>
+                                <li class="expandable">
+                                    <div class="learn-header">理解四大核心组件：大语言模型、记忆系统、工具调用、规划能力</div>
+                                    <div class="learn-detail">
+                                        <strong>🧠 LLM（大语言模型）</strong>：Agent 的"大脑"，负责理解、推理、生成<br>
+                                        <strong>💾 Memory（记忆）</strong>：存储对话历史、用户偏好、学习到的知识<br>
+                                        <strong>🔧 Tools（工具）</strong>：扩展能力，如搜索、计算、代码执行、API 调用<br>
+                                        <strong>📋 Planning（规划）</strong>：分解复杂任务、制定执行计划、反思和调整<br><br>
+                                        <strong>类比理解：</strong> 把 Agent 想象成一个员工 —— LLM 是他的智商，Memory 是他的笔记本，Tools 是他的工具箱，Planning 是他的工作方法论。
+                                    </div>
+                                </li>
+                                <li class="expandable">
+                                    <div class="learn-header">了解 ReAct、CoT、Self-Reflection 等推理模式</div>
+                                    <div class="learn-detail">
+                                        <strong>🔗 CoT（Chain-of-Thought）</strong>：让模型"一步一步思考"，提升复杂推理能力<br>
+                                        <code>Let's think step by step...</code><br><br>
+                                        <strong>⚡ ReAct（Reasoning + Acting）</strong>：思考 → 行动 → 观察 → 再思考的循环<br>
+                                        <code>Thought: 我需要查询天气 → Action: 调用天气 API → Observation: 北京 25°C → Thought: 现在可以回答了</code><br><br>
+                                        <strong>🔄 Self-Reflection</strong>：让 Agent 检查自己的输出，发现错误并修正<br>
+                                        <code>我的答案是 X，让我检查一下... 发现问题，修正为 Y</code>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                         <div class="homework">
@@ -631,11 +720,46 @@
                             </div>
                         </div>
                         <div class="section">
-                            <div class="section-title">📚 学习内容</div>
+                            <div class="section-title">📚 学习内容 <span style="font-size: 12px; color: var(--text-muted); font-weight: normal;">（点击展开详情）</span></div>
                             <ul>
-                                <li>研究 OpenClaw 的 AGENTS.md、SOUL.md、MEMORY.md 设计</li>
-                                <li>对比 LangChain、AutoGen、CrewAI、LlamaIndex</li>
-                                <li>理解 Skill/Tool 系统如何扩展 Agent 能力</li>
+                                <li class="expandable">
+                                    <div class="learn-header">研究 OpenClaw 的 AGENTS.md、SOUL.md、MEMORY.md 设计</div>
+                                    <div class="learn-detail">
+                                        <strong>AGENTS.md</strong>：定义 Agent 的行为规范、工作流程、安全边界<br>
+                                        <strong>SOUL.md</strong>：定义 Agent 的"人格"、语气、价值观<br>
+                                        <strong>MEMORY.md</strong>：长期记忆存储，跨会话持久化<br><br>
+                                        <strong>动手实践：</strong> 阅读你自己的 OpenClaw workspace 下的这些文件，理解它们如何影响 Agent 行为。
+                                    </div>
+                                </li>
+                                <li class="expandable">
+                                    <div class="learn-header">对比 LangChain、AutoGen、CrewAI、LlamaIndex</div>
+                                    <div class="learn-detail">
+                                        <strong>🦜 LangChain</strong>：最流行的 Agent 框架，生态丰富，适合快速原型<br>
+                                        - 优点：文档全、社区大、组件多<br>
+                                        - 缺点：抽象层多、学习曲线陡<br><br>
+                                        <strong>🤖 AutoGen（微软）</strong>：多 Agent 对话框架，Agent 之间可以"聊天"<br>
+                                        - 优点：多 Agent 协作简单<br>
+                                        - 缺点：定制化较难<br><br>
+                                        <strong>👥 CrewAI</strong>：角色扮演式多 Agent，定义"团队"完成任务<br>
+                                        - 优点：概念直观、易上手<br>
+                                        - 缺点：功能相对简单<br><br>
+                                        <strong>🦙 LlamaIndex</strong>：专注 RAG 和数据连接<br>
+                                        - 优点：RAG 能力强、数据源多<br>
+                                        - 缺点：Agent 能力相对弱
+                                    </div>
+                                </li>
+                                <li class="expandable">
+                                    <div class="learn-header">理解 Skill/Tool 系统如何扩展 Agent 能力</div>
+                                    <div class="learn-detail">
+                                        <strong>Skill vs Tool 的区别：</strong><br>
+                                        - <strong>Tool</strong>：单一功能，如"搜索网页"、"发送邮件"<br>
+                                        - <strong>Skill</strong>：一组相关能力 + 使用说明，如"GitHub 操作技能"包含创建 PR、查看 Issue 等多个 Tool<br><br>
+                                        <strong>设计原则：</strong><br>
+                                        1. 单一职责：每个 Tool 只做一件事<br>
+                                        2. 清晰描述：让 LLM 知道什么时候该用这个 Tool<br>
+                                        3. 错误处理：Tool 执行失败时返回有意义的错误信息
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                         <div class="homework">
@@ -693,11 +817,43 @@
                             </div>
                         </div>
                         <div class="section">
-                            <div class="section-title">📚 学习内容</div>
+                            <div class="section-title">📚 学习内容 <span style="font-size: 12px; color: var(--text-muted); font-weight: normal;">（点击展开详情）</span></div>
                             <ul>
-                                <li>阅读 <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering" target="_blank">Anthropic Prompt Engineering 指南</a></li>
-                                <li>学习 Few-shot、Chain-of-Thought、Self-Consistency 技巧</li>
-                                <li>理解角色设定、约束条件、输出格式的设计</li>
+                                <li class="expandable">
+                                    <div class="learn-header">阅读 <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering" target="_blank">Anthropic Prompt Engineering 指南</a></div>
+                                    <div class="learn-detail">
+                                        <strong>为什么是 Anthropic 的指南？</strong> Claude 团队的官方最佳实践，写得非常清晰实用。<br><br>
+                                        <strong>重点章节：</strong><br>
+                                        1. <strong>Be clear and direct</strong>：清晰直接地表达需求<br>
+                                        2. <strong>Use examples</strong>：Few-shot 示例的正确用法<br>
+                                        3. <strong>Give Claude a role</strong>：角色设定技巧<br>
+                                        4. <strong>Use XML tags</strong>：结构化输入输出<br><br>
+                                        <strong>预计时间：</strong> 1 小时阅读 + 实践
+                                    </div>
+                                </li>
+                                <li class="expandable">
+                                    <div class="learn-header">学习 Few-shot、Chain-of-Thought、Self-Consistency 技巧</div>
+                                    <div class="learn-detail">
+                                        <strong>📝 Few-shot Learning</strong>：给几个示例，让模型学会模式<br>
+                                        <code>输入: "苹果" → 输出: "水果"<br>输入: "汽车" → 输出: "交通工具"<br>输入: "电脑" → 输出: ?</code><br><br>
+                                        <strong>🔗 Chain-of-Thought (CoT)</strong>：引导模型展示推理过程<br>
+                                        <code>"请一步一步思考，然后给出答案"</code><br><br>
+                                        <strong>🎯 Self-Consistency</strong>：多次采样，选择最一致的答案<br>
+                                        适用于有明确答案的推理问题，通过"投票"提高准确率
+                                    </div>
+                                </li>
+                                <li class="expandable">
+                                    <div class="learn-header">理解角色设定、约束条件、输出格式的设计</div>
+                                    <div class="learn-detail">
+                                        <strong>🎭 角色设定</strong>：定义 Agent 是谁<br>
+                                        <code>"你是一个资深 Python 开发工程师，有 10 年经验..."</code><br><br>
+                                        <strong>🚧 约束条件</strong>：定义 Agent 不能做什么<br>
+                                        <code>"不要编造信息"、"如果不确定请说不知道"、"回答控制在 200 字以内"</code><br><br>
+                                        <strong>📋 输出格式</strong>：定义回答的结构<br>
+                                        <code>"请用 JSON 格式返回，包含 title、summary、tags 字段"</code><br><br>
+                                        <strong>黄金公式：</strong> 角色 + 任务 + 约束 + 格式 = 好的 System Prompt
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                         <div class="homework">
@@ -1833,6 +1989,15 @@
 
         document.querySelectorAll('.day-header').forEach(header => {
             header.addEventListener('click', () => {
+                header.parentElement.classList.toggle('expanded');
+            });
+        });
+
+        // Expandable learning items
+        document.querySelectorAll('.section li.expandable .learn-header').forEach(header => {
+            header.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') return; // Don't toggle when clicking links
+                e.stopPropagation();
                 header.parentElement.classList.toggle('expanded');
             });
         });
