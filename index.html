@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30天 Agent 专家养成计划 | XY's Learning Journey</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a25;
+            --accent: #6366f1;
+            --accent-light: #818cf8;
+            --accent-glow: rgba(99, 102, 241, 0.3);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #2a2a3a;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --test-bg: rgba(34, 197, 94, 0.1);
+            --test-border: rgba(34, 197, 94, 0.3);
+            --job-bg: rgba(245, 158, 11, 0.1);
+            --job-border: rgba(245, 158, 11, 0.3);
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .hero {
+            position: relative;
+            padding: 80px 20px;
+            text-align: center;
+            background: radial-gradient(ellipse at top, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        /* Job Requirements Section */
+        .job-section {
+            max-width: 1000px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+
+        .job-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .job-card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .job-item {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .job-item h3 {
+            font-size: 14px;
+            color: var(--warning);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .job-item .percent {
+            background: var(--warning);
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .job-item ul {
+            list-style: none;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .job-item li {
+            padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .job-item li::before {
+            content: '•';
+            color: var(--warning);
+        }
+
+        .skill-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--accent-light);
+            margin: 2px;
+        }
+
+        .skill-tag.hot {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: var(--warning);
+        }
+
+        /* Progress Section */
+        .progress-section {
+            padding: 0 20px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .progress-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .progress-title { font-size: 14px; color: var(--text-secondary); }
+        .progress-stats { font-size: 14px; color: var(--accent-light); font-weight: 600; }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+        }
+
+        .week-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .week-tab {
+            flex-shrink: 0;
+            padding: 12px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .week-tab:hover { border-color: var(--accent); color: var(--text-primary); }
+        .week-tab.active { background: var(--gradient-1); border-color: transparent; color: white; }
+
+        .week-content { display: none; }
+        .week-content.active { display: block; }
+
+        .days-grid { display: grid; gap: 16px; }
+
+        .day-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .day-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+        }
+
+        .day-card.completed { border-color: var(--success); }
+
+        .day-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            cursor: pointer;
+        }
+
+        .day-info { display: flex; align-items: center; gap: 16px; }
+
+        .day-number {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--accent-light);
+        }
+
+        .day-card.completed .day-number { background: var(--success); color: white; }
+        .day-card.completed .day-number::after { content: '✓'; }
+        .day-card.completed .day-number span { display: none; }
+
+        .day-meta h3 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+        .day-meta p { font-size: 14px; color: var(--text-muted); }
+
+        .day-toggle {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+
+        .day-card.expanded .day-toggle { transform: rotate(180deg); }
+
+        .day-content {
+            display: none;
+            padding: 0 24px 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .day-card.expanded .day-content { display: block; }
+
+        .section { margin-top: 20px; }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-light);
+            margin-bottom: 12px;
+        }
+
+        .section ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .section li {
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .section li::before { content: '▸'; color: var(--accent); flex-shrink: 0; }
+        .section a { color: var(--accent-light); text-decoration: none; }
+        .section a:hover { text-decoration: underline; }
+
+        /* Job Mapping */
+        .job-mapping {
+            background: var(--job-bg);
+            border: 1px solid var(--job-border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+
+        .job-mapping-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--warning);
+            margin-bottom: 10px;
+        }
+
+        .job-mapping-content {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .job-mapping-content strong {
+            color: var(--warning);
+        }
+
+        .homework {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .homework-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--accent-light);
+            margin-bottom: 12px;
+        }
+
+        .homework-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .homework-item:last-child { border-bottom: none; }
+
+        .homework-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            margin-top: 2px;
+        }
+
+        .homework-checkbox.checked { background: var(--accent); }
+        .homework-checkbox.checked::after { content: '✓'; color: white; font-size: 12px; }
+
+        .homework-content { flex: 1; }
+        .homework-content .task { color: var(--text-secondary); margin-bottom: 8px; }
+
+        .test-criteria {
+            background: var(--test-bg);
+            border: 1px solid var(--test-border);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 8px;
+        }
+
+        .test-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--success);
+            margin-bottom: 8px;
+        }
+
+        .test-list {
+            list-style: none;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .test-list li {
+            padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+        }
+
+        .test-list li::before { content: '☐'; color: var(--success); font-size: 14px; }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer a { color: var(--accent-light); text-decoration: none; }
+
+        @media (max-width: 640px) {
+            .hero { padding: 60px 20px; }
+            .day-header { padding: 16px; }
+            .day-number { width: 40px; height: 40px; font-size: 16px; }
+            .day-meta h3 { font-size: 16px; }
+            .job-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <h1>🚀 30天 Agent 专家养成</h1>
+        <p>基于 2025 年行业招聘要求，系统掌握 AI Agent 开发核心技能</p>
+    </section>
+
+    <!-- Job Requirements Overview -->
+    <section class="job-section">
+        <div class="job-card">
+            <h2>📊 2025 AI/Agent 工程师招聘要求分析</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 14px;">
+                基于 1000+ 职位 JD 分析（数据来源：Glassdoor、BOSS直聘、猎聘、LinkedIn）
+            </p>
+            <div class="job-grid">
+                <div class="job-item">
+                    <h3>🐍 编程语言 <span class="percent">必备</span></h3>
+                    <ul>
+                        <li>Python <span class="skill-tag hot">71% JD 要求</span></li>
+                        <li>Java <span class="skill-tag">22%</span></li>
+                        <li>TypeScript/JavaScript <span class="skill-tag">18%</span></li>
+                    </ul>
+                </div>
+                <div class="job-item">
+                    <h3>☁️ 云平台 <span class="percent">高需求</span></h3>
+                    <ul>
+                        <li>AWS <span class="skill-tag hot">33% JD 要求</span></li>
+                        <li>Azure <span class="skill-tag">26%</span></li>
+                        <li>GCP <span class="skill-tag">15%</span></li>
+                    </ul>
+                </div>
+                <div class="job-item">
+                    <h3>🤖 核心技能 <span class="percent">Agent 专属</span></h3>
+                    <ul>
+                        <li>LLM/大模型应用 <span class="skill-tag hot">必备</span></li>
+                        <li>RAG 检索增强 <span class="skill-tag hot">热门</span></li>
+                        <li>Prompt Engineering <span class="skill-tag hot">热门</span></li>
+                        <li>Agent 框架 (LangChain等) <span class="skill-tag">加分</span></li>
+                    </ul>
+                </div>
+                <div class="job-item">
+                    <h3>🗄️ 数据与存储</h3>
+                    <ul>
+                        <li>SQL <span class="skill-tag">17% JD 要求</span></li>
+                        <li>向量数据库 (Milvus/Chroma) <span class="skill-tag hot">热门</span></li>
+                        <li>Redis/MongoDB <span class="skill-tag">常见</span></li>
+                    </ul>
+                </div>
+                <div class="job-item">
+                    <h3>🧠 ML/DL 框架</h3>
+                    <ul>
+                        <li>PyTorch <span class="skill-tag hot">主流</span></li>
+                        <li>TensorFlow <span class="skill-tag">常见</span></li>
+                        <li>Hugging Face <span class="skill-tag hot">热门</span></li>
+                    </ul>
+                </div>
+                <div class="job-item">
+                    <h3>🎓 学历与经验</h3>
+                    <ul>
+                        <li>硕士/博士 <span class="skill-tag">48% 接受本科</span></li>
+                        <li>3-5 年经验 <span class="skill-tag">主流要求</span></li>
+                        <li>初级岗位 <span class="skill-tag">仅 2.5%</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="margin-top: 20px; padding: 16px; background: var(--bg-secondary); border-radius: 12px;">
+                <h3 style="font-size: 14px; color: var(--accent-light); margin-bottom: 10px;">💡 课程设计说明</h3>
+                <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.8;">
+                    本课程覆盖招聘市场最热门的技能点：<strong style="color: var(--accent-light);">Python</strong> 全程使用、
+                    <strong style="color: var(--accent-light);">LLM 应用开发</strong>、<strong style="color: var(--accent-light);">RAG 系统</strong>、
+                    <strong style="color: var(--accent-light);">Prompt Engineering</strong>、<strong style="color: var(--accent-light);">Agent 框架</strong>（LangChain/LangGraph）、
+                    <strong style="color: var(--accent-light);">向量数据库</strong>、<strong style="color: var(--accent-light);">多 Agent 协作</strong>。
+                    每个模块对应 JD 中的具体技能要求，完成后可直接用于简历和面试。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="progress-section">
+        <div class="progress-card">
+            <div class="progress-header">
+                <span class="progress-title">总体进度</span>
+                <span class="progress-stats"><span id="completed-days">0</span> / 30 天</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="week-tabs">
+            <button class="week-tab active" data-week="1">第一周：基础框架</button>
+            <button class="week-tab" data-week="2">第二周：Memory & RAG</button>
+            <button class="week-tab" data-week="3">第三周：多Agent协作</button>
+            <button class="week-tab" data-week="4">第四周：工程化实战</button>
+        </div>
+
+        <!-- Week 1 -->
+        <div class="week-content active" data-week="1">
+            <div class="days-grid">
+                <!-- Day 1 -->
+                <div class="day-card" data-day="1">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>1</span></div>
+                            <div class="day-meta">
+                                <h3>理解 Agent 架构（上）</h3>
+                                <p>Agent = LLM + Memory + Tools + Planning</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 对应招聘要求</div>
+                            <div class="job-mapping-content">
+                                <strong>JD 关键词：</strong>熟悉 LLM 原理、了解 Agent 架构设计、有 AI 应用开发经验<br>
+                                <strong>面试考点：</strong>Agent 四大组件、ReAct 原理、与传统 Chatbot 的区别
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">📚 学习内容</div>
+                            <ul>
+                                <li>阅读 Lilian Weng 经典文章：<a href="https://lilianweng.github.io/posts/2023-06-23-agent/" target="_blank">LLM Powered Autonomous Agents</a></li>
+                                <li>理解四大核心组件：大语言模型、记忆系统、工具调用、规划能力</li>
+                                <li>了解 ReAct、CoT、Self-Reflection 等推理模式</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 今日作业</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="1-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">完成 Lilian Weng 文章阅读并做笔记</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>能说出 Agent 的四大核心组件</li>
+                                            <li>能解释 ReAct 模式的工作原理</li>
+                                            <li>笔记保存到 memory/agent-learning/day01.md</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="1-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">用自己的话解释什么是 Agent（面试模拟）</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>能用一句话定义 Agent（30 秒电梯演讲）</li>
+                                            <li>能举出 3 个 Agent 的实际应用场景</li>
+                                            <li>能说出 Agent 与传统 Chatbot 的区别</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 2 -->
+                <div class="day-card" data-day="2">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>2</span></div>
+                            <div class="day-meta">
+                                <h3>理解 Agent 架构（下）</h3>
+                                <p>分析主流 Agent 框架</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 对应招聘要求</div>
+                            <div class="job-mapping-content">
+                                <strong>JD 关键词：</strong>熟悉 LangChain/LlamaIndex/AutoGen 等框架、有 Agent 开发经验<br>
+                                <strong>面试考点：</strong>框架选型理由、各框架优缺点、实际项目经验
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">📚 学习内容</div>
+                            <ul>
+                                <li>研究 OpenClaw 的 AGENTS.md、SOUL.md、MEMORY.md 设计</li>
+                                <li>对比 LangChain、AutoGen、CrewAI、LlamaIndex</li>
+                                <li>理解 Skill/Tool 系统如何扩展 Agent 能力</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 今日作业</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="2-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">画出 Agent 系统的架构图</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>架构图包含 LLM、Memory、Tools、Planning</li>
+                                            <li>能解释消息从接收到回复的完整流程</li>
+                                            <li>图片保存并可用于简历/面试展示</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="2-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">对比 4 个主流 Agent 框架</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>列出 LangChain、AutoGen、CrewAI、LlamaIndex 的特点</li>
+                                            <li>分析各框架的适用场景</li>
+                                            <li>形成对比表格（可用于面试回答）</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 3 -->
+                <div class="day-card" data-day="3">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>3</span></div>
+                            <div class="day-meta">
+                                <h3>Prompt Engineering 基础</h3>
+                                <p>System Prompt 设计原则</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 对应招聘要求</div>
+                            <div class="job-mapping-content">
+                                <strong>JD 关键词：</strong>精通 Prompt Engineering、有 LLM 调优经验、了解 CoT/Few-shot 等技巧<br>
+                                <strong>面试考点：</strong>Prompt 设计原则、如何提升输出质量、处理幻觉问题
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">📚 学习内容</div>
+                            <ul>
+                                <li>阅读 <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering" target="_blank">Anthropic Prompt Engineering 指南</a></li>
+                                <li>学习 Few-shot、Chain-of-Thought、Self-Consistency 技巧</li>
+                                <li>理解角色设定、约束条件、输出格式的设计</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 今日作业</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="3-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">写 3 个不同风格的 System Prompt</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>实现：客服助手、代码审查员、数据分析师</li>
+                                            <li>每个 Prompt 至少包含：角色定义、行为约束、输出格式</li>
+                                            <li>在 Claude/GPT 中测试并记录效果差异</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="3-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">用 CoT 技巧解决复杂推理问题</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>选择一个数学/逻辑推理问题</li>
+                                            <li>对比有无 CoT 的回答质量和准确率</li>
+                                            <li>总结 CoT 的最佳实践</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 4 -->
+                <div class="day-card" data-day="4">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>4</span></div>
+                            <div class="day-meta">
+                                <h3>Prompt Engineering 进阶</h3>
+                                <p>ReAct 模式与自我反思</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 对应招聘要求</div>
+                            <div class="job-mapping-content">
+                                <strong>JD 关键词：</strong>了解 ReAct/Reflection 等推理模式、能优化 Agent 行为<br>
+                                <strong>面试考点：</strong>ReAct 原理实现、Self-Critique 应用场景
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">📚 学习内容</div>
+                            <ul>
+                                <li>深入理解 ReAct (Reasoning + Acting) 模式</li>
+                                <li>学习 Self-Critique 和反思机制</li>
+                                <li>实践：优化 Agent 的 System Prompt</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 今日作业</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="4-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">实现 ReAct 模式的 Prompt</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>Prompt 包含 Thought → Action → Observation 循环</li>
+                                            <li>测试需要多步推理的任务</li>
+                                            <li>记录 Agent 的推理过程</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="4-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">实现带自我反思的 Prompt</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>Prompt 包含"先给出答案，再自我检查"流程</li>
+                                            <li>测试 3 个案例，记录反思是否改进答案</li>
+                                            <li>总结 Self-Critique 的适用场景</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 5 -->
+                <div class="day-card" data-day="5">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>5</span></div>
+                            <div class="day-meta">
+                                <h3>Tool Calling / Function Calling</h3>
+                                <p>让 Agent 调用外部工具</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 对应招聘要求</div>
+                            <div class="job-mapping-content">
+                                <strong>JD 关键词：</strong>熟悉 Function Calling、能设计 API 接口、有 Tool 集成经验<br>
+                                <strong>面试考点：</strong>Function Calling 实现原理、工具设计最佳实践、错误处理
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">📚 学习内容</div>
+                            <ul>
+                                <li>理解 OpenAI / Claude / 国产模型的 Function Calling 差异</li>
+                                <li>学习 JSON Schema 定义工具接口</li>
+                                <li>研究 LangChain Tools 的实现</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 今日作业</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="5-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">用 Python 实现 3 个自定义 Tool</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>实现：天气查询、网页搜索、计算器</li>
+                                            <li>每个 Tool 有完整的 JSON Schema 定义</li>
+                                            <li>有错误处理和参数验证</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="5-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">让 Agent 正确选择并调用 Tool</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>Agent 能根据问题自动选择合适的 Tool</li>
+                                            <li>测试 5 个不同类型的问题</li>
+                                            <li>记录 Tool 调用成功率</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 6-7 -->
+                <div class="day-card" data-day="6">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>6-7</span></div>
+                            <div class="day-meta">
+                                <h3>🎯 项目一：搜索问答 Agent</h3>
+                                <p>周末实战：搜索 → 总结 → 回答</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 简历/面试价值</div>
+                            <div class="job-mapping-content">
+                                <strong>可写入简历：</strong>独立开发 AI Agent 系统，集成搜索引擎 API，实现自动问答功能<br>
+                                <strong>技术栈展示：</strong>Python、LangChain、OpenAI API、Web Search API<br>
+                                <strong>量化成果：</strong>响应时间 < 5s，回答准确率 > 80%
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">🎯 项目要求</div>
+                            <ul>
+                                <li>用 Python + LangChain 实现</li>
+                                <li>集成搜索 API（DuckDuckGo / Tavily / SerpAPI）</li>
+                                <li>实现：接收问题 → 搜索网页 → 总结内容 → 回答问题</li>
+                                <li>部署为 API 服务</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 项目交付</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="6-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">完成代码并推送到 GitHub</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>代码仓库包含完整 README</li>
+                                            <li>有 requirements.txt</li>
+                                            <li>代码有基本注释和类型标注</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="6-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">部署并完成功能测试</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>测试："最近的 AI Agent 新闻有哪些？"</li>
+                                            <li>测试："OpenAI 最新发布了什么？"</li>
+                                            <li>测试："LangChain 和 LlamaIndex 有什么区别？"</li>
+                                            <li>记录响应时间和 Token 消耗</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 2 -->
+        <div class="week-content" data-week="2">
+            <div class="days-grid">
+                <!-- Day 8-9 -->
+                <div class="day-card" data-day="8">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>8-9</span></div>
+                            <div class="day-meta">
+                                <h3>Memory 系统设计</h3>
+                                <p>短期记忆与长期记忆</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 对应招聘要求</div>
+                            <div class="job-mapping-content">
+                                <strong>JD 关键词：</strong>了解对话状态管理、有上下文记忆实现经验<br>
+                                <strong>面试考点：</strong>长短期记忆设计、记忆压缩策略、Token 优化
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">📚 学习内容</div>
+                            <ul>
+                                <li>理解 Conversation Buffer / Summary / Vector Store 三种记忆模式</li>
+                                <li>阅读 <a href="https://python.langchain.com/docs/modules/memory/" target="_blank">LangChain Memory 文档</a></li>
+                                <li>学习记忆压缩和遗忘策略</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 今日作业</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="8-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">实现对话记忆系统</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>实现 ConversationMemory 类</li>
+                                            <li>支持 add、get、summarize 方法</li>
+                                            <li>能处理超长对话（Token 限制）</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="8-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">对比不同记忆策略的效果</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>测试 Buffer vs Summary vs Sliding Window</li>
+                                            <li>记录各策略的 Token 消耗</li>
+                                            <li>评估上下文保持能力</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 10-11 -->
+                <div class="day-card" data-day="10">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>10-11</span></div>
+                            <div class="day-meta">
+                                <h3>RAG 基础：Embedding 与向量库</h3>
+                                <p>检索增强生成的核心</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 对应招聘要求</div>
+                            <div class="job-mapping-content">
+                                <strong>JD 关键词：</strong>熟悉 RAG 架构、有向量数据库使用经验（Milvus/Chroma/Qdrant）、了解 Embedding<br>
+                                <strong>面试考点：</strong>RAG vs Fine-tuning、Chunking 策略、向量检索原理
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">📚 学习内容</div>
+                            <ul>
+                                <li>理解 Embedding 原理（text-embedding-3, BGE, M3E）</li>
+                                <li>Vector DB 选型：Chroma, Milvus, Qdrant, pgvector</li>
+                                <li>文档切分（Chunking）策略</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 今日作业</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="10-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">用 Chroma 搭建本地知识库</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>成功运行 Chroma 实例</li>
+                                            <li>导入至少 10 个文档</li>
+                                            <li>实现基本的相似度搜索</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="10-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">对比不同 Chunking 策略</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>测试固定大小 vs 语义分割</li>
+                                            <li>测试不同 overlap 的效果</li>
+                                            <li>记录检索准确率差异</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 12 -->
+                <div class="day-card" data-day="12">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>12</span></div>
+                            <div class="day-meta">
+                                <h3>RAG 进阶：Hybrid Search & Rerank</h3>
+                                <p>提升检索质量</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 对应招聘要求</div>
+                            <div class="job-mapping-content">
+                                <strong>JD 关键词：</strong>有 RAG 优化经验、了解 Reranker、能提升检索召回率<br>
+                                <strong>面试考点：</strong>Hybrid Search 实现、Reranker 选型、Query Transformation
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">📚 学习内容</div>
+                            <ul>
+                                <li>Hybrid Search：向量 + BM25 混合检索</li>
+                                <li>Reranking：Cohere Rerank、BGE Reranker</li>
+                                <li>Query Transformation：HyDE、Query Expansion</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 今日作业</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="12-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">实现 Hybrid Search</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>结合向量搜索 + 关键词搜索</li>
+                                            <li>实现结果融合策略</li>
+                                            <li>对比单一搜索的效果提升</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="12-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">集成 Reranker</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>使用 BGE-Reranker 或 Cohere</li>
+                                            <li>对比 Rerank 前后的结果质量</li>
+                                            <li>记录延迟变化</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 13-14 -->
+                <div class="day-card" data-day="13">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>13-14</span></div>
+                            <div class="day-meta">
+                                <h3>🎯 项目二：RAG 知识库问答</h3>
+                                <p>周末实战：企业知识库</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 简历/面试价值</div>
+                            <div class="job-mapping-content">
+                                <strong>可写入简历：</strong>设计并实现企业级 RAG 知识库系统，支持多格式文档导入和智能问答<br>
+                                <strong>技术栈展示：</strong>Python、LangChain、Chroma/Milvus、Embedding、Reranker<br>
+                                <strong>量化成果：</strong>支持 1000+ 文档，检索准确率 > 85%，响应时间 < 3s
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">🎯 项目要求</div>
+                            <ul>
+                                <li>支持 PDF/Markdown/TXT 文档导入</li>
+                                <li>实现 Hybrid Search + Reranker</li>
+                                <li>用 Gradio/Streamlit 做 Web UI</li>
+                                <li>显示检索来源（Citation）</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 项目交付</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="13-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">完成 RAG 系统并部署</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>Web UI 可访问</li>
+                                            <li>支持上传新文档</li>
+                                            <li>显示检索来源</li>
+                                            <li>响应时间 < 5 秒</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="13-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">准备 10 个测试用例并评估</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>准备中英文混合测试问题</li>
+                                            <li>记录每个问题的回答质量（1-5 分）</li>
+                                            <li>分析失败案例原因</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 3 -->
+        <div class="week-content" data-week="3">
+            <div class="days-grid">
+                <!-- Day 15-16 -->
+                <div class="day-card" data-day="15">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>15-16</span></div>
+                            <div class="day-meta">
+                                <h3>Multi-Agent 系统设计</h3>
+                                <p>LangGraph 工作流编排</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 对应招聘要求</div>
+                            <div class="job-mapping-content">
+                                <strong>JD 关键词：</strong>有多 Agent 协作经验、熟悉 LangGraph/AutoGen、能设计复杂工作流<br>
+                                <strong>面试考点：</strong>Agent 通信机制、状态管理、错误处理和人类干预
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">📚 学习内容</div>
+                            <ul>
+                                <li>Multi-Agent 架构模式：串行、并行、层级、循环</li>
+                                <li>LangGraph 核心概念：State、Node、Edge、Conditional</li>
+                                <li>Agent 间通信和状态共享</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 今日作业</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="15-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">用 LangGraph 实现工作流</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>工作流包含至少 3 个节点</li>
+                                            <li>实现条件分支逻辑</li>
+                                            <li>能可视化工作流图</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="15-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">实现两个 Agent 的协作</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>Agent A：提出问题/分析需求</li>
+                                            <li>Agent B：提供解决方案</li>
+                                            <li>实现多轮对话直到达成共识</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 17-18 -->
+                <div class="day-card" data-day="17">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>17-18</span></div>
+                            <div class="day-meta">
+                                <h3>Planning 与 Task Decomposition</h3>
+                                <p>让 Agent 学会规划</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 对应招聘要求</div>
+                            <div class="job-mapping-content">
+                                <strong>JD 关键词：</strong>了解 AI Planning、能实现复杂任务分解、有 Tree of Thoughts 经验<br>
+                                <strong>面试考点：</strong>任务分解策略、执行监控、错误恢复
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">📚 学习内容</div>
+                            <ul>
+                                <li>Task Decomposition 方法</li>
+                                <li>Tree of Thoughts / Graph of Thoughts</li>
+                                <li>Plan-and-Execute 架构</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 今日作业</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="17-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">实现 Plan-and-Execute Agent</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>输入复杂任务，自动生成执行计划</li>
+                                            <li>显示分解后的子任务列表</li>
+                                            <li>按计划逐步执行并汇报进度</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="17-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">实现执行监控和重规划</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>能检测子任务执行失败</li>
+                                            <li>失败时自动调整计划</li>
+                                            <li>支持人类中断和干预</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 19 -->
+                <div class="day-card" data-day="19">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>19</span></div>
+                            <div class="day-meta">
+                                <h3>Agent 可观测性与评估</h3>
+                                <p>LangSmith / Phoenix</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 对应招聘要求</div>
+                            <div class="job-mapping-content">
+                                <strong>JD 关键词：</strong>有 LLM 应用监控经验、能设计评估指标、了解 A/B 测试<br>
+                                <strong>面试考点：</strong>可观测性工具选型、评估指标设计、生产环境调试
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">📚 学习内容</div>
+                            <ul>
+                                <li>LangSmith / Phoenix / LangFuse 对比</li>
+                                <li>Agent 评估指标设计</li>
+                                <li>生产环境问题排查</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 今日作业</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="19-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">集成 Tracing 工具</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>集成 LangSmith 或 Phoenix</li>
+                                            <li>能查看每次调用的详细 trace</li>
+                                            <li>能统计 Token 使用量和延迟</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="19-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">设计评估框架</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>定义评估维度：准确性、相关性、完整性</li>
+                                            <li>准备 20 个测试用例</li>
+                                            <li>实现自动化评估脚本</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 20-21 -->
+                <div class="day-card" data-day="20">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>20-21</span></div>
+                            <div class="day-meta">
+                                <h3>🎯 项目三：多 Agent 协作系统</h3>
+                                <p>周末实战：研究助手 / 代码审查</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 简历/面试价值</div>
+                            <div class="job-mapping-content">
+                                <strong>可写入简历：</strong>设计并实现多 Agent 协作系统，使用 LangGraph 编排工作流，支持自动任务分解和执行监控<br>
+                                <strong>技术栈展示：</strong>Python、LangGraph、Multi-Agent、State Management<br>
+                                <strong>量化成果：</strong>3 个 Agent 协作，任务完成率 > 90%，支持人类干预
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">🎯 项目选择（二选一）</div>
+                            <ul>
+                                <li><strong>方案 A：代码审查系统</strong> — Reviewer + Fixer + Tester 三个 Agent</li>
+                                <li><strong>方案 B：研究助手</strong> — Searcher + Reader + Writer 三个 Agent</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 项目交付</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="20-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">完成多 Agent 系统</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>至少 3 个 Agent 协作</li>
+                                            <li>有清晰的角色分工文档</li>
+                                            <li>支持人类中断和干预</li>
+                                            <li>有完整的执行日志</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="20-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">录制演示视频</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>视频长度 3-5 分钟</li>
+                                            <li>展示完整任务执行流程</li>
+                                            <li>解释 Agent 协作方式</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week 4 -->
+        <div class="week-content" data-week="4">
+            <div class="days-grid">
+                <!-- Day 22-23 -->
+                <div class="day-card" data-day="22">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>22-23</span></div>
+                            <div class="day-meta">
+                                <h3>生产部署与成本优化</h3>
+                                <p>FastAPI + 流式输出 + 缓存</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 对应招聘要求</div>
+                            <div class="job-mapping-content">
+                                <strong>JD 关键词：</strong>有 LLM 应用部署经验、了解成本优化、能设计高可用架构<br>
+                                <strong>面试考点：</strong>流式输出实现、Token 优化策略、缓存设计、API 设计
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">📚 学习内容</div>
+                            <ul>
+                                <li>FastAPI + SSE 流式输出</li>
+                                <li>Token 优化：Prompt 压缩、结果缓存</li>
+                                <li>异步处理和队列</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 今日作业</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="22-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">实现流式 API 服务</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>FastAPI 服务支持 SSE</li>
+                                            <li>首字节响应 < 1 秒</li>
+                                            <li>有 /docs API 文档</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="22-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">实现成本监控和缓存</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>记录每次请求的 Token 消耗</li>
+                                            <li>实现 Redis 缓存</li>
+                                            <li>缓存命中率统计</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 24-25 -->
+                <div class="day-card" data-day="24">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>24-25</span></div>
+                            <div class="day-meta">
+                                <h3>安全与 Prompt Injection 防护</h3>
+                                <p>LLM 应用安全</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 对应招聘要求</div>
+                            <div class="job-mapping-content">
+                                <strong>JD 关键词：</strong>了解 LLM 安全、有 Prompt Injection 防护经验、能设计安全策略<br>
+                                <strong>面试考点：</strong>常见攻击类型、防御措施、内容审核、权限控制
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">📚 学习内容</div>
+                            <ul>
+                                <li>Prompt Injection 攻击类型：直接注入、间接注入、越狱</li>
+                                <li>防御策略：输入验证、输出过滤、权限隔离</li>
+                                <li>内容审核和敏感词过滤</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 今日作业</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="24-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">尝试 5 种 Prompt Injection 攻击</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>测试：忽略上文指令、角色扮演、DAN 越狱</li>
+                                            <li>记录成功/失败及原因</li>
+                                            <li>分析模型的防御机制</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="24-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">实现安全防护层</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>实现输入预处理和验证</li>
+                                            <li>实现输出内容审核</li>
+                                            <li>重新测试攻击，验证防御效果</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 26 -->
+                <div class="day-card" data-day="26">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>26</span></div>
+                            <div class="day-meta">
+                                <h3>国产模型与开源模型</h3>
+                                <p>GLM / Qwen / DeepSeek / Ollama</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 对应招聘要求</div>
+                            <div class="job-mapping-content">
+                                <strong>JD 关键词：</strong>了解国产大模型、有本地部署经验、能进行模型选型<br>
+                                <strong>面试考点：</strong>模型对比（质量/速度/成本）、私有化部署、API 兼容层
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">📚 学习内容</div>
+                            <ul>
+                                <li>国产模型：智谱 GLM-4、通义 Qwen、DeepSeek、百川</li>
+                                <li>开源部署：Ollama、vLLM、TGI</li>
+                                <li>API 差异与兼容层设计</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 今日作业</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="26-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">用国产/开源模型跑 Agent</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>测试 GLM-4 或 Qwen</li>
+                                            <li>用相同 10 个问题测试</li>
+                                            <li>记录成功率和质量评分</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="26-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">写模型选型报告</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>对比 OpenAI vs Claude vs 国产模型</li>
+                                            <li>从质量、速度、成本三个维度分析</li>
+                                            <li>给出不同场景的选型建议</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 27-28 -->
+                <div class="day-card" data-day="27">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>27-28</span></div>
+                            <div class="day-meta">
+                                <h3>🎓 毕业项目</h3>
+                                <p>完整 Agent 产品</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 简历/面试价值</div>
+                            <div class="job-mapping-content">
+                                <strong>核心价值：</strong>这是你求职时的王牌项目！要能完整展示你的 Agent 开发能力<br>
+                                <strong>简历呈现：</strong>项目名称、技术栈、核心功能、量化成果、演示链接<br>
+                                <strong>面试准备：</strong>能详细讲解架构设计、技术选型理由、遇到的挑战和解决方案
+                            </div>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">🎯 项目方向（选一个）</div>
+                            <ul>
+                                <li><strong>AI 股场增强版</strong> — 自动分析、智能推荐、多 Agent 协作</li>
+                                <li><strong>个人知识管理 Agent</strong> — 自动整理、关联、回顾、Obsidian 集成</li>
+                                <li><strong>代码仓库助手</strong> — 理解代码库、回答问题、自动生成 PR</li>
+                            </ul>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">✅ 必须包含的能力</div>
+                            <ul>
+                                <li>Memory 系统（对话记忆或知识库）</li>
+                                <li>Tool Calling（至少 3 个工具）</li>
+                                <li>Planning（任务分解或多步推理）</li>
+                                <li>生产部署（可公开访问）</li>
+                            </ul>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 毕业交付</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="27-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">完成毕业项目并部署</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>项目包含 Memory + Tools + Planning</li>
+                                            <li>部署上线可公开访问</li>
+                                            <li>有完整的 README 和架构图</li>
+                                            <li>代码推送到 GitHub</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="27-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">写技术博客（可用于面试）</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>字数 > 2000 字</li>
+                                            <li>包含架构图和代码示例</li>
+                                            <li>包含遇到的挑战和解决方案</li>
+                                            <li>发布到技术社区</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="27-3"></div>
+                                <div class="homework-content">
+                                    <div class="task">录制演示视频</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>视频长度 5-10 分钟</li>
+                                            <li>展示核心功能和技术亮点</li>
+                                            <li>可用于面试时展示</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 29 -->
+                <div class="day-card" data-day="29">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>29</span></div>
+                            <div class="day-meta">
+                                <h3>简历优化与面试准备</h3>
+                                <p>整理 30 天成果</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="job-mapping">
+                            <div class="job-mapping-title">💼 求职准备</div>
+                            <div class="job-mapping-content">
+                                <strong>简历关键词：</strong>LLM、RAG、Agent、LangChain、Prompt Engineering、向量数据库、Python<br>
+                                <strong>面试高频问题：</strong>Agent 架构设计、RAG 优化经验、生产环境问题排查、成本优化策略
+                            </div>
+                        </div>
+                        <div class="homework">
+                            <div class="homework-title">📝 今日作业</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="29-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">更新简历</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>添加 3 个 Agent 项目经验</li>
+                                            <li>技能标签包含招聘热词</li>
+                                            <li>每个项目有量化成果</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="29-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">准备面试问答</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>准备 20 个常见面试问题的回答</li>
+                                            <li>每个项目能讲 5 分钟</li>
+                                            <li>准备 3 个你想问面试官的问题</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 30 -->
+                <div class="day-card" data-day="30">
+                    <div class="day-header">
+                        <div class="day-info">
+                            <div class="day-number"><span>30</span></div>
+                            <div class="day-meta">
+                                <h3>🎓 结业 & 未来规划</h3>
+                                <p>持续学习路径</p>
+                            </div>
+                        </div>
+                        <div class="day-toggle">▼</div>
+                    </div>
+                    <div class="day-content">
+                        <div class="homework">
+                            <div class="homework-title">📝 最终任务</div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="30-1"></div>
+                                <div class="homework-content">
+                                    <div class="task">制定未来 3 个月学习计划</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>选择深入方向（RAG / Multi-Agent / 垂直领域）</li>
+                                            <li>列出要学习的技术和资源</li>
+                                            <li>设定可量化的目标</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="homework-item">
+                                <div class="homework-checkbox" data-task="30-2"></div>
+                                <div class="homework-content">
+                                    <div class="task">开始开源贡献</div>
+                                    <div class="test-criteria">
+                                        <div class="test-title">✅ 验收测试</div>
+                                        <ul class="test-list">
+                                            <li>Fork 一个 Agent 相关项目（LangChain / OpenClaw）</li>
+                                            <li>找到一个 good first issue</li>
+                                            <li>提交第一个 PR</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>🚀 XY's Agent Learning Journey | Powered by <a href="https://github.com/openclaw/openclaw" target="_blank">OpenClaw</a></p>
+        <p style="margin-top: 8px;">目标：成为 Agent 专家 💪</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.week-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.week-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.week-content').forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.querySelector(`.week-content[data-week="${tab.dataset.week}"]`).classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.day-header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.parentElement.classList.toggle('expanded');
+            });
+        });
+
+        const STORAGE_KEY = 'agent-learning-progress';
+
+        function loadProgress() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? JSON.parse(saved) : {};
+        }
+
+        function saveProgress(progress) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+        }
+
+        function updateProgressBar() {
+            const progress = loadProgress();
+            const totalTasks = document.querySelectorAll('.homework-checkbox').length;
+            const completedTasks = Object.values(progress).filter(v => v).length;
+            
+            document.getElementById('completed-days').textContent = Math.floor(completedTasks / 2);
+            document.getElementById('progress-fill').style.width = `${(completedTasks / totalTasks) * 100}%`;
+
+            document.querySelectorAll('.day-card').forEach(card => {
+                const checkboxes = card.querySelectorAll('.homework-checkbox');
+                if (checkboxes.length > 0) {
+                    const allCompleted = Array.from(checkboxes).every(cb => progress[cb.dataset.task]);
+                    card.classList.toggle('completed', allCompleted);
+                }
+            });
+        }
+
+        const progress = loadProgress();
+        document.querySelectorAll('.homework-checkbox').forEach(checkbox => {
+            if (progress[checkbox.dataset.task]) {
+                checkbox.classList.add('checked');
+            }
+            
+            checkbox.addEventListener('click', (e) => {
+                e.stopPropagation();
+                checkbox.classList.toggle('checked');
+                const progress = loadProgress();
+                progress[checkbox.dataset.task] = checkbox.classList.contains('checked');
+                saveProgress(progress);
+                updateProgressBar();
+            });
+        });
+
+        updateProgressBar();
+    </script>
+</body>
+</html>
